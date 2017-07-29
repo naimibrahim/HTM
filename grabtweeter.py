@@ -21,7 +21,7 @@ except TwythonError as e:
 
 client = MongoClient('localhost', 27017)
 
-db = client.tweet_database
+db = client.tweet_htm
 
 posts = db.posts
 
