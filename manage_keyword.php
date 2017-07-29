@@ -70,6 +70,9 @@ $cursor_term_sedia_ada = $collection2->distinct('search_term');
         								<a href="add_aviable_tweet.php?k=<?php echo $document_term_sedia_ada ?>"><div class="profile-01 centered">
         									<p>ADD TO MY LIST</p>
         								</div></a>
+                        <a href="delete_tweet.php?k=<?php echo $document_term_sedia_ada ?>"><div class="profile-01 centered">
+                          <p>DELETE ALL TWEET</p>
+                        </div></a>
         								<div class="centered">
         									<h6><br/>  </h6>
         								</div>
