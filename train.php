@@ -22,10 +22,12 @@ $term += array('sentimen' => array('$exists' => false)); //hanya paparkan yang t
    	function list_option()
 	{
 	 $option = '';
-	  $option = "<option>Sila pilih</option>";
-	   $option .= "<option value='neutral' >Neutral</option>";
-	   $option .= "<option value='positive' >Positive</option>";
-	   $option .= "<option value='negative' >Negative</option>";
+	  $option = "<option>Please Choose</option>";
+	   $option .= "<option value='not_relevant' >Not Relevant</option>";
+	   $option .= "<option value='forced_labour' >Forced Labour</option>";
+	   $option .= "<option value='sex' >Sex</option>";
+     $option .= "<option value='child_army' >Child Army</option>";
+     $option .= "<option value='forced_marriage' >Forced Marriage</option>";
 
 
 	  return $option;

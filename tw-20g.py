@@ -77,7 +77,7 @@ featureList = []
  
 #connect to database (mongodb)
 client = MongoClient('localhost', 27017)
-db = client.tweet_database
+db = client.tweet_htm
 posts = db.users_posts
 
 user_id = ObjectId(sys.argv[1])
