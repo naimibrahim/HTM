@@ -1,0 +1,124 @@
+//simple mapreduce utk kira sentimen
+db.users_posts.mapReduce( 
+   function() { emit(this.nbsentimen,1); }, 
+   function(key, values) {return Array.sum(values)}, 
+      {  
+         query:{"userId":ObjectId("54f91504aefda581df7f1d96"),"search_term":"hudud"},  
+         out:"post_total" 
+      }
+).find()
+
+
+
+
+
+db.users_posts.find({"userId":ObjectId("54f91504aefda581df7f1d96"),"nbsentimen":{"$exists":false},"search_term":"hudud"})
+
+
+
+//reset semula nbsentimen
+db.users_posts.update({},{$unset:{nbsentimen:1}},false,true)
+
+
+//ensure cuma sekali tarik sahaja
+db.users_posts.ensureIndex({userId: 1, postId: 1}, {unique: true, dropDups: true})
+
+//buat balik unique index
+db.users_posts.dropIndex("userId_1_postId_1")
+
+
+
+//-------mapreduce untuk combine tweet (text) dan sentimen di user_post------------
+mapPosts = function() {
+    var values = {
+        text: this.text,
+        search_term : this.search_term
+    };
+    emit(this._id, values);
+};
+
+mapUsers_Posts = function() {
+    var values = {
+    search_term: this.search_term,
+    sentimen: this.sentimen,
+    trained: this.trained
+    };
+    emit(this.postId, values);
+};
+
+reduceUsers_Posts =  function(k, values) {
+    var result = {};
+    values.forEach(function(value) {
+    var field;
+        if ("text" in value) {
+            if (!("text" in result)) {
+                result.text = [];
+            }
+            result.text.push(value);
+        } else {
+    for (field in value) {
+        if (value.hasOwnProperty(field) ) {
+                result[field] = value[field];
+        }
+         };  
+       }
+      });
+       return result;
+};
+
+
+db.each_users_posts.drop();
+db.posts.mapReduce(mapPosts, reduceUsers_Posts, {"out": {"reduce": "each_users_posts"}});
+db.users_posts.mapReduce(mapUsers_Posts, reduceUsers_Posts, {"out": {"reduce": "each_users_posts"}});
+db.each_users_posts.find();
+
+//------tamat mapreduce untuk combine tweet (text) dan sentimen di user_post--------
+
+
+//---------------mapreduce untuk tarikh dan tweet----------
+
+map = function()
+{       var $tarikh =  Date(this.value.text.created_at);
+        var bulan = tojsonObject($tarikh);
+        var bulan2 = bulan.getMonth();
+    
+    var key = {sentimen: this.nbsentimen, 
+            month: bulan2 , day: this.value.text.created_at };
+  emit(key, {count: 1});
+        
+        
+};
+
+reduce = function(key, values)
+{
+   var sum = 0;
+   values.forEach(function(value)
+   {
+     sum += value['count'];
+   });
+   return {count: sum};
+};
+
+db.each_users_posts.mapReduce(
+  map,
+  reduce,
+  {
+    out : "example2_results"
+  }
+ );
+
+ //---------------mapreduce untuk tarikh dan tweet----------
+
+ //---------------mapreduce untuk tarikh dan tweet2----------
+
+ db.each_users_posts.aggregate([
+{$match:{'value.search_term':"muslim",'nbsentimen':"positive"}},
+{$group:{_id:"$value.text.created_at",total:{$sum : 1}}}
+])
+ //---------------mapreduce untuk tarikh dan tweet2----------
+
+
+
+login
+user :mysentiment
+pass : mysentiment@2015
