@@ -29,7 +29,7 @@ $collection = $db->users_posts; //select collection (table)
 		//$temp_id = "54e9c9b74dedcb1e882f429b";
 		//$temp_id = $id[$i];
 		//echo $temp_id;
-		if($sentimen[$i]=="positive"||$sentimen[$i]=="negative"||$sentimen[$i]=="neutral"||$sentimen[$i]=="irrelevent")
+		if($sentimen[$i]=="not_relevant"||$sentimen[$i]=="forced_labour"||$sentimen[$i]=="sex"||$sentimen[$i]=="child_army"||$sentimen[$i]=="forced_marriage")
 		{
 			$update = array('sentimen'=>$sentimen[$i],'trained'=>'y');
 

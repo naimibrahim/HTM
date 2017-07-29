@@ -70,28 +70,7 @@ if($cursor_count_semak_kosong==0){
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-      <?php if($_SESSION["user_level"] ==1){ 
-  //-------------------modal box------------------?>
-
-
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">MySentiment Analyzer and Validation</h4>
-            </div>
-            <div class="modal-body">
-              Great! you have done the training for keyword <?php echo $keyword; ?>. Now we need you check and validate our engine classification. Once you have complete training by classify 25 tweets for keyword Malaysia and Maybank, you will not see this dialog again.
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>              
-        </div>
-        <?php }//-------------------modal box tamat------------------ ?>
+      
 
 
       <!--main content start-->
@@ -151,11 +130,11 @@ if($cursor_count_semak_kosong==0){
 
 
                                $senti = substr($output[$i], 26);  //dapatkan sentimen yang telah dianalisis
-                             // print $senti . "<br/>" ;
+                              //print $senti . "<br/>" ;
 
 
 
-                              if($senti=="positive"||$senti=="negative"||$senti=="neutral"||$senti=="irrelevent")
+                              if($senti=="not_relevant"||$senti=="forced_labour"||$senti=="sex"||$senti=="child_army"||$senti=="forced_marriage")
                               { 
                                 //update collection each_users_posts
                                   $key = substr($output[$i], 0, 24); //dapatkan _id untuk id_each_users_posts
@@ -177,48 +156,65 @@ if($cursor_count_semak_kosong==0){
                             //-------untuk dapatkan statistics ----------------
 
 
-                          $jum_senti_negative=0;
-                          $jum_senti_positive=0;
-                          $jum_senti_neutral=0;
+                          $jum_senti_not_relevant=0;
+                          $jum_senti_forced_labour=0;
+                          $jum_senti_child_army=0;
+                          $jum_senti_sex=0;
+                          $jum_senti_forced_marriage=0;
 
 
 
 
 
 
-                          $kunci_positive = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> 'positive');
-                          $jum_senti_positive = $collection->count($kunci_positive);
-                          $senti_positive = $jum_senti_positive;
+
+                          $kunci_not_relevant = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> 'not_relevant');
+                          $jum_senti_not_relevant= $collection->count($kunci_not_relevant);
+                          $senti_not_relevant = $jum_senti_not_relevant;
 
 
 
 
-                          $kunci_negative= array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> 'negative');
-                          $jum_senti_negative = $collection->count($kunci_negative);
-                          $senti_negative = $jum_senti_negative ;
+                          $kunci_forced_labour= array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> 'forced_labour');
+                          $jum_senti_forced_labour = $collection->count($kunci_forced_labour);
+                          $senti_forced_labour = $jum_senti_forced_labour ;
 
 
 
-                          $kunci_neutral = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> 'neutral');
-                          $jum_senti_neutral = $collection->count($kunci_neutral);
-                          $senti_neutral = $jum_senti_neutral;
+                          $kunci_sex = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> 'sex');
+                          $jum_senti_sex = $collection->count($kunci_sex);
+                          $senti_sex = $jum_senti_sex;
+
+                          $kunci_child_army = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> 'child_army');
+                          $jum_senti_child_army = $collection->count($kunci_child_army);
+                          $senti_child_army = $jum_senti_child_army;
+
+                          $kunci_forced_marriage = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> 'forced_marriage');
+                          $jum_senti_forced_marriage = $collection->count($kunci_forced_marriage);
+                          $senti_forced_marriage= $jum_senti_forced_marriage;
 
 
-                          $total_senti = $jum_senti_positive + $jum_senti_negative + $jum_senti_neutral;
+
+                          $total_senti =  $jum_senti_not_relevant  +  $jum_senti_forced_labour + $jum_senti_child_army + $jum_senti_sex +  $jum_senti_forced_marriage;
 
                           $total_semua = $total_senti;
 
 
 
 
-                          $peratus_positive = 0;
-                          $peratus_negative = 0;
-                          $peratus_neutral = 0;
+                          $peratus_not_relevant = 0;
+                          $peratus_forced_labour = 0;
+                          $peratus_child_army  = 0;
+                          $peratus_sex = 0;
+                          $peratus_forced_marriage = 0;
+
                               
                           if($total_semua!=0){
-                            $peratus_positive = $senti_positive / $total_semua * 100;
-                            $peratus_negative = $senti_negative / $total_semua * 100;
-                            $peratus_neutral = $senti_neutral / $total_semua * 100;
+                            $peratus_not_relevant = $senti_not_relevant / $total_semua * 100;
+                            $peratus_forced_labour = $senti_forced_labour / $total_semua * 100;
+                            $peratus_child_army = $senti_sex / $total_semua * 100;
+                            $peratus_sex = $senti_child_army / $total_semua * 100;
+                            $peratus_forced_marriage = $senti_forced_marriage / $total_semua * 100;
                           }
 
 
@@ -252,27 +248,37 @@ if($cursor_count_semak_kosong==0){
                             $cursor_semua_tweet_ditrain = $collection->find($kunci2);
                             $jumlah_yg_ditrain = $cursor_semua_tweet_ditrain->count();
 
-                            $kunci_positive = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'y','sentimen'=> 'positive');
-                            $jumlah_positive_yg_ditrain = $collection->count($kunci_positive);
+                            $kunci_kunci_forced_labour = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'y','sentimen'=> 'forced_labour');
+                            $jumlah_force_labour_yg_ditrain = $collection->count($kunci_kunci_forced_labour);
                                                  
 
-                            $kunci_negative = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'y','sentimen'=> 'negative');
-                            $jumlah_negative_yg_ditrain = $collection->count($kunci_negative);
+                            $kunci_not_relevant = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'y','sentimen'=> 'not_relevant');
+                            $jumlah_not_relevent_yg_ditrain = $collection->count($kunci_not_relevant);
 
-                            $kunci_neutral = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'y','sentimen'=> 'neutral');
-                            $jumlah_neutral_yg_ditrain = $collection->count($kunci_neutral);
+                            $kunci_child_army = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'y','sentimen'=> 'child_army');
+                            $jumlah_child_army_yg_ditrain = $collection->count($kunci_child_army);
+
+                            $kunci_child_sex = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'y','sentimen'=> 'sex');
+                            $jumlah_sex_yg_ditrain = $collection->count($kunci_sex);
+
+                            $kunci_forced_marriage = array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'y','sentimen'=> 'forced_marriage');
+                            $jumlah_forced_marriage_yg_ditrain = $collection->count($kunci_forced_marriage);
 
                             echo "<br/>Total tweet that you train are : " . $jumlah_yg_ditrain;
 
                             echo "<br/>Total tweet for keyword <b>" . $keyword . "</b> are : " . ($total_senti + $jumlah_yg_ditrain);
 
-                            echo "<br/><br/>Total positive tweets that our engine classify are : " . $jum_senti_positive . " @ " . $peratus_positive . "%" ;
-                            echo "<br/>Total negative tweets that our engine classify are : " . $jum_senti_negative . " @ " . $peratus_negative . "%" ;
-                            echo "<br/>Total neutral tweets that our engine classify are : " . $jum_senti_neutral  . " @ " . $peratus_neutral . "%" ;
+                            echo "<br/><br/>Total forced_labour tweets that our engine classify are : " . $jum_senti_forced_labour . " @ " . $peratus_forced_labour . "%" ;
+                            echo "<br/>Total not_relevant tweets that our engine classify are : " . $jum_senti_not_relevant . " @ " . $peratus_not_relevant . "%" ;
+                            echo "<br/>Total child_army tweets that our engine classify are : " . $jum_senti_child_army  . " @ " . $peratus_child_army . "%" ;
+                            echo "<br/>Total sex tweets that our engine classify are : " . $jum_senti_sex  . " @ " . $peratus_sex . "%" ;
+                            echo "<br/>Total forced_marriage tweets that our engine classify are : " . $jum_senti_forced_marriage . " @ " . $peratus_forced_marriage . "%" ;
 
-                            $total_positive = $jum_senti_positive  + $jumlah_positive_yg_ditrain;
-                            $total_negative = $jum_senti_negative + $jumlah_negative_yg_ditrain;
-                            $total_neutral = $jum_senti_neutral  + $jumlah_neutral_yg_ditrain;
+                            $total_forced_labour = $jum_senti_forced_labour  + $jumlah_force_labour_yg_ditrain;
+                            $total_not_relevant = $jum_senti_not_relevant + $jumlah_not_relevent_yg_ditrain;
+                            $total_child_army = $jum_senti_child_army   + $jumlah_child_army_yg_ditrain;
+                            $total_sex = $jum_senti_sex + $jumlah_sex_yg_ditrain;
+                            $total_forced_marriage = $jum_senti_forced_marriage   + $jumlah_forced_marriage_yg_ditrain;
                             
 
                            $kunci_semua= array('search_term' => $keyword,'userId'=> $temp_id,'trained'=>'n','nbsentimen'=> array('$exists' => true));
