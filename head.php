@@ -4,7 +4,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>MySentimen</title>
+    <title>iHUNTING - Intelligent Human Trafficking Monitoring</title>
     <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
 
     <!-- Bootstrap core CSS -->

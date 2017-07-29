@@ -10,12 +10,16 @@ OAUTH_TOKEN = '28974427-i6SeIw1KaVfci75rQ9iwifsu2tle01NOIT9duLMSw'
 OAUTH_TOKEN_SECRET = 'h2YUuGSMHUbYHieehGUKxTpTLwjdfBDg1JWfLf2e4lBLJ'
 
 search_keyword = sys.argv[1];
-language = "en";
+language = "id"; #bahasa tweet yg akan dicari
+
+latitude = 3.147564	# geographical centre of search - Dataran Merdeka Kuala Lumpur
+longitude = 101.693125	# geographical centre of search - Dataran Merdeka Kuala Lumpur
+max_range = 500 # search range in kilometres
 
 # Requires Authentication as of Twitter API v1.1
 twitter = Twython(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 try:
-    search_results = twitter.search(q=search_keyword, count=200, lang=language)
+    search_results = twitter.search(q=search_keyword, count=200, lang=language, geocode="%f,%f,%dkm" % (latitude, longitude, max_range))
 except TwythonError as e:
     print e
 

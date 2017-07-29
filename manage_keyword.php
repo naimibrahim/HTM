@@ -11,6 +11,47 @@ $cursor = $collection->distinct('search_term',array("userId"=> $temp_id));
 
 $collection2 = $db->posts; //select collection (table)
 $cursor_term_sedia_ada = $collection2->distinct('search_term');
+    function list_option_city()
+  {
+   $option = '';
+     $option .= "<option value='kuala_lumpur' >Kuala Lumpur</option>";
+     $option .= "<option value='putrajaya' >Putrajaya</option>";
+     $option .= "<option value='shah_alam' >Shah Alam</option>";
+     $option .= "<option value='seremban' >Seremban</option>";
+     $option .= "<option value='ipoh' >Ipoh</option>";
+
+
+    return $option;
+  }
+  
+  function list_option_radius()
+  {
+   $option = '';
+     $option .= "<option value='5' >5 KM</option>";
+     $option .= "<option value='10' >10 KM</option>";
+     $option .= "<option value='25' >25 KM</option>";
+     $option .= "<option value='50' >50 KM</option>";
+     $option .= "<option value='200' >200 KM</option>";
+     $option .= "<option value='500' >500 KM</option>";
+    $option .= "<option value='1000' >1000 KM</option>";
+
+
+    return $option;
+  }
+
+  function list_option_language()
+  {
+   $option = '';
+     $option .= "<option value='ms' >Bahasa Melayu</option>";
+     $option .= "<option value='id' >Bahasa Indonesia</option>";
+     $option .= "<option value='en' >English</option>";
+     $option .= "<option value='bn' >Bengali</option>";
+     $option .= "<option value='zh' >Chinese</option>";
+     $option .= "<option value='ta' >Tamil</option>";
+
+
+    return $option;
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,10 +82,35 @@ $cursor_term_sedia_ada = $collection2->distinct('search_term');
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper site-min-height">
+          <font color="white">
           	<h3><i class="fa fa-angle-right"></i> Discover new keyword</h3>
+          </font>
+
+
+            <div class="dropdown">
+
+            <font color="white">Please Choose City :</font>
+            <select name='filter[]' id='filter[]'>
+                      <?php  echo list_option_city($sentiment); ?>
+             </select>
+             
+             <font color="white">Please Choose Radius :</font>
+             <select name='filter[]' id='filter[]'>
+                      <?php  echo list_option_radius($sentiment); ?>
+             </select>
+
+             <font color="white">Please Choose Language :</font>
+             <select name='filter[]' id='filter[]'>
+                      <?php  echo list_option_language($sentiment); ?>
+             </select>
+
+            </div>
+
+
           	<div class="row mt">
           		<div class="col-lg-12">
           
+
 					
 					<! -- 2ND ROW OF PANELS -->
 					<div class="row">
@@ -87,7 +153,7 @@ $cursor_term_sedia_ada = $collection2->distinct('search_term');
 					
           		</div>
 
-                                          <!-- form untuk search dan grab tweet dari twetter -->
+                <!-- form untuk search dan grab tweet dari twetter -->
                 <form action="grabtweeter.php" method="POST">
                 <h4>
                 <input type="text" id="id_search" name="id_search" placeholder="Type new keyword.." \>

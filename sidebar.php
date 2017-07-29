@@ -7,7 +7,7 @@ session_start(); ?>
               <ul class="sidebar-menu" id="nav-accordion">
               
               	  <p class="centered"><a href="main_basic.php"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-              	  <h5 class="centered">My Sentiment</h5>
+              	  <h5 class="centered">iHUNTING</h5>
               	  	
                   <li class="mt">
                       <?php
@@ -39,7 +39,7 @@ session_start(); ?>
                       </a><?php  }  ?>
                           <a href="about_mysentiment.php">
                           <i class="fa fa-user"></i>
-                          <span>About MySentiment</span>
+                          <span>About iHUNTING</span>
                       </a>
                   </li>
                    <li class="mt">
