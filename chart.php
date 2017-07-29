@@ -400,13 +400,17 @@ var Script = function () {
 
 
 
+                            
+
       // data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type
  Morris.Bar({
         element: 'hero-bar',
         data: [
-          {Sentimen: 'Positive', Total: <?php echo $total_positive; ?> },
-          {Sentimen: 'Negative', Total: <?php echo $total_negative; ?> },
-          {Sentimen: 'Neutral', Total: <?php echo $total_neutral; ?> },
+          {Sentimen: 'Forced Labour', Total: <?php echo $total_forced_labour; ?> },
+          {Sentimen: 'Not Relevant', Total: <?php echo $total_not_relevant; ?> },
+          {Sentimen: 'Child Army', Total: <?php echo $total_child_army; ?> },
+          {Sentimen: 'Sex', Total: <?php echo $total_sex; ?> },
+          {Sentimen: 'Forced Marriage', Total: <?php echo $total_forced_marriage; ?> },
 
         ],
         xkey: 'Sentimen',
@@ -417,9 +421,11 @@ var Script = function () {
         hideHover: 'auto',
         barColors: function (row, series, type) {
         console.log("--> "+row.label, series, type);
-        if(row.label == "Positive") return "#32CD30";
-        else if(row.label == "Negative") return "#AD1D28";
-        else if(row.label == "Neutral") return "#fec04c";
+        if(row.label == "Forced Labour") return "#32CD30";
+        else if(row.label == "Sex") return "#AD1D28";
+        else if(row.label == "Forced Marriage") return "#fec04c";
+        else if(row.label == "Not Relevant") return "#AD1D28";
+        else if(row.label == "Child Army") return "#fec04c";
         }
         });
 
@@ -430,9 +436,11 @@ var Script = function () {
       Morris.Donut({
         element: 'hero-donut',
         data: [
-          {label: 'Positive', value: <?php echo $jum_senti_positive; ?>},
-          {label: 'Negative', value: <?php echo $jum_senti_negative; ?> },
-          {label: 'Neutral', value: <?php echo $jum_senti_neutral; ?> }
+          {label: 'Forced Labour', value: <?php echo $jum_senti_forced_labour; ?>},
+          {label: 'Not Relevant', value: <?php echo $jum_senti_not_relevant; ?> },
+          {label: 'Child Army', value: <?php echo $jum_senti_child_army; ?> },
+          {label: 'Sex', value: <?php echo $jum_senti_sex; ?> },
+          {label: 'Forced Marriage', value: <?php echo $jum_senti_forced_marriage; ?> }
         ],
           colors: ['#32CD32', '#FF0000', '#F0E68C'],
         formatter: function (y) { return y}
